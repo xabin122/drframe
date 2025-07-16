@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>ویرایش پروفایل</h2>
+<form method="post" action="/panel/profile/edit">
+  نام کامل: <input type="text" name="fullname" value="{{ profile.fullname }}"><br>
+  ایمیل: <input type="email" name="email" value="{{ profile.email }}"><br>
+  آدرس: <input type="text" name="address" value="{{ profile.address }}"><br>
+  مهارت‌ها: <input type="text" name="skills" value="{{ profile.skills }}"><br>
+  عکس پروفایل (آدرس عکس): <input type="text" name="avatar" value="{{ profile.avatar }}"><br>
+  <button type="submit">ذخیره</button>
+</form>
+{% endblock %}

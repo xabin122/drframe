@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>اکسپلور کاربران</h2>
+<div class="users-list">
+    {% for u in users %}
+        <div class="user-card">
+            <a href="/user/{{u.username}}">
+                <img src="{{u.avatar}}" alt="Avatar" width="80" height="80" style="border-radius:40px">
+                <p><b>{{u.fullname}}</b></p>
+                <p>{{u.skills}}</p>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

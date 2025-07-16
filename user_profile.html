@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>پروفایل {{fullname}}</h2>
+<img src="{{avatar}}" alt="Avatar" width="100" height="100" style="border-radius:50px">
+<ul>
+    <li>نام کاربری: {{username}}</li>
+    <li>نام کامل: {{fullname}}</li>
+    <li>ایمیل: {{email}}</li>
+    <li>آدرس: {{address}}</li>
+    <li>مهارت‌ها: {{skills}}</li>
+</ul>
+{% if resume_link %}
+    <p>رزومه: <a href="{{resume_link}}" target="_blank">دانلود رزومه</a></p>
+{% endif %}
+{% endblock %}

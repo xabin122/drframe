@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>آپلود رزومه (فقط PDF)</h2>
+{% if success %}
+    <div style="color:green;">با موفقیت آپلود شد!</div>
+    <a href="{{resume_link}}" target="_blank">مشاهده رزومه</a>
+{% elif error %}
+    <div style="color:red;">{{error}}</div>
+{% endif %}
+<form method="post" enctype="multipart/form-data" action="/resume">
+    <input type="file" name="resume" accept=".pdf" required>
+    <button type="submit">آپلود</button>
+</form>
+{% endblock %}

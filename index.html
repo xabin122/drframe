@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>همفراز | ابزار تیم‌سازی و کسب و کار آنلاین</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #3B82F6;
+            --primary-dark: #2563EB;
+            --secondary: #10B981;
+            --accent: #8B5CF6;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #F9FAFB;
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+        
+        .section {
+            padding: 6rem 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f3f4f6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.2);
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .pricing-card {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .testimonial-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-quote {
+            position: relative;
+            padding: 1.5rem;
+        }
+        
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(59, 130, 246, 0.2);
+            font-family: serif;
+        }
+        
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform: translateY(-100%);
+        }
+        
+        .sticky-header.visible {
+            transform: translateY(0);
+        }
+        
+        .hero-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-color: rgba(59, 130, 246, 0.05);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: -1;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                padding: 2rem;
+                transition: all 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white py-4 px-6 flex items-center justify-between">
+        <div class="flex items-center">
+            <div class="text-3xl font-bold text-primary gradient-text">
+                <span class="text-primary">هم</span><span class="text-accent">فراز</span>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="mobile-menu-btn cursor-pointer">
+                <i class="fas fa-bars text-2xl"></i>
+            </div>
+            
+            <ul class="nav-links flex items-center space-x-6 space-x-reverse">
+                <li><a href="#home" class="nav-link">خانه</a></li>
+                <li><a href="#features" class="nav-link">ویژگی‌ها</a></li>
+                <li><a href="#testimonials" class="nav-link">نظرات مشتریان</a></li>
+                <li><a href="#pricing" class="nav-link">تعرفه‌ها</a></li>
+                <li><a href="#about" class="nav-link">درباره ما</a></li>
+                <li><a href="#contact" class="nav-link">تماس با ما</a></li>
+                {% if user %}
+                <li><a href="./dashboard" class="btn-primary">داشبورد   </a></li>
+                {% else %}
+                <li><a href="./login" class="btn-primary">ورود به سامانه</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Sticky Header -->
+    <header class="sticky-header py-3 px-6 flex items-center justify-between">
+        <div class="flex items-center">
+            <div class="text-2xl font-bold">
+                <span class="text-primary">هم</span><span class="text-accent">فراز</span>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="mobile-menu-btn cursor-pointer">
+                <i class="fas fa-bars text-2xl"></i>
+            </div>
+            
+            <ul class="nav-links flex items-center space-x-4 space-x-reverse">
+                <li><a href="#home" class="nav-link">خانه</a></li>
+                <li><a href="#features" class="nav-link">ویژگی‌ها</a></li>
+                <li><a href="#testimonials" class="nav-link">نظرات</a></li>
+                <li><a href="#pricing" class="nav-link">تعرفه‌ها</a></li>
+                <li><a href="#about" class="nav-link">درباره ما</a></li>
+                <li><a href="#contact" class="nav-link">تماس</a></li>
+                {% if user %}
+                <li><a href="./dashboard" class="btn-primary">داشبورد   </a></li>
+                {% else %}
+                <li><a href="./login" class="btn-primary">ورود به سامانه</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="hero-shape"></div>
+        <div class="container mx-auto px-4 py-20">
+            <div class="flex flex-wrap items-center">
+                <div class="w-full lg:w-1/2 mb-12 lg:mb-0" data-aos="fade-right">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                        <span class="text-primary">هم</span><span class="text-accent">فراز</span>
+                        <span class="block mt-2">ابزار هوشمند تیم‌سازی و کسب و کار</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8">
+                        با همفراز، تیم خود را به سطح بالاتری ببرید. ابزاری قدرتمند برای مدیریت پروژه‌ها، ارتباط تیمی و رشد کسب و کار شما.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#features" class="btn-primary">
+                            <i class="fas fa-rocket ml-2"></i>
+                            شروع کنید
+                        </a>
+                        <a href="#demo" class="btn-secondary">
+                            <i class="fas fa-play ml-2"></i>
+                            مشاهده دمو
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2 relative" data-aos="fade-left">
+                    <div class="floating">
+                        <svg class="w-full h-auto" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="50" y="50" rx="20" ry="20" width="400" height="300" style="fill:white;stroke:url(#grad1);stroke-width:5" />
+                            <rect x="70" y="80" rx="10" ry="10" width="150" height="20" style="fill:#E5E7EB;" />
+                            <rect x="70" y="110" rx="10" ry="10" width="200" height="20" style="fill:#E5E7EB;" />
+                            <rect x="70" y="140" rx="10" ry="10" width="180" height="20" style="fill:#E5E7EB;" />
+                            <rect x="70" y="190" rx="10" ry="10" width="100" height="40" style="fill:url(#grad1);" />
+                            <circle cx="350" cy="120" r="50" style="fill:url(#grad1);opacity:0.7" />
+                            <rect x="70" y="250" rx="10" ry="10" width="360" height="1" style="fill:#E5E7EB;" />
+                            <rect x="70" y="270" rx="10" ry="10" width="100" height="20" style="fill:#E5E7EB;" />
+                            <rect x="180" y="270" rx="10" ry="10" width="100" height="20" style="fill:#E5E7EB;" />
+                            <rect x="290" y="270" rx="10" ry="10" width="100" height="20" style="fill:#E5E7EB;" />
+                        </svg>
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary rounded-full opacity-10"></div>
+                    <div class="absolute -top-10 -right-10 w-60 h-60 bg-primary rounded-full opacity-10"></div>
+                </div>
+            </div>
+        </div>
+        <a href="#features" class="scroll-down text-primary">
+            <i class="fas fa-chevron-down text-3xl"></i>
+        </a>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">ویژگی‌های منحصر به فرد همفراز</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    ابزاری کامل برای مدیریت تیم و کسب و کار شما با امکانات پیشرفته و کاربردی
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">مدیریت تیمی هوشمند</h3>
+                    <p class="text-gray-600">
+                        با ابزارهای پیشرفته مدیریت تیم، اعضای تیم خود را سازماندهی کنید و بهره‌وری را افزایش دهید.
+                    </p>
+                </div>
+                
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">مدیریت پروژه‌ها</h3>
+                    <p class="text-gray-600">
+                        پروژه‌های خود را با سیستم کانبان پیشرفته مدیریت کنید و از پیشرفت کار مطلع شوید.
+                    </p>
+                </div>
+                
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">تحلیل عملکرد</h3>
+                    <p class="text-gray-600">
+                        با گزارش‌های تحلیلی پیشرفته، عملکرد تیم و پروژه‌های خود را بررسی کنید.
+                    </p>
+                </div>
+                
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">ارتباطات یکپارچه</h3>
+                    <p class="text-gray-600">
+                        با سیستم چت و ارتباطات داخلی، همکاری تیمی را به سطح جدیدی ببرید.
+                    </p>
+                </div>
+                
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">زمان‌بندی هوشمند</h3>
+                    <p class="text-gray-600">
+                        با تقویم و سیستم زمان‌بندی پیشرفته، جلسات و رویدادهای مهم را مدیریت کنید.
+                    </p>
+                </div>
+                
+                <div class="card p-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">امنیت پیشرفته</h3>
+                    <p class="text-gray-600">
+                        با سیستم امنیتی قدرتمند، از داده‌های تیم و کسب و کار خود محافظت کنید.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <a href="#demo" class="btn-primary">
+                    <i class="fas fa-eye ml-2"></i>
+                    مشاهده تمام قابلیت‌ها
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute top-0 left-0 w-40 h-40 bg-primary rounded-full opacity-10 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-60 h-60 bg-secondary rounded-full opacity-10 translate-x-1/2 translate-y-1/2"></div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="section relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">همفراز در عمل</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    نگاهی به محیط کاربری و قابلیت‌های همفراز بیندازید
+                </p>
+            </div>
+            
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl" data-aos="zoom-in">
+                <div class="aspect-w-16 aspect-h-9 bg-gray-100 flex items-center justify-center">
+                    <div class="w-full max-w-4xl mx-auto p-4">
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                            <div class="bg-gray-800 p-4 flex items-center">
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                </div>
+                                <div class="text-white mx-auto">داشبورد همفراز</div>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex flex-wrap -mx-2">
+                                    <div class="w-1/4 px-2">
+                                        <div class="bg-gray-100 rounded-lg p-4">
+                                            <h4 class="font-bold mb-4">منو</h4>
+                                            <ul class="space-y-2">
+                                                <li class="bg-primary text-white rounded p-2">داشبورد</li>
+                                                <li class="hover:bg-gray-200 rounded p-2">پروژه‌ها</li>
+                                                <li class="hover:bg-gray-200 rounded p-2">تیم‌ها</li>
+                                                <li class="hover:bg-gray-200 rounded p-2">گزارش‌ها</li>
+                                                <li class="hover:bg-gray-200 rounded p-2">تنظیمات</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="w-3/4 px-2">
+                                        <div class="bg-gray-50 rounded-lg p-4">
+                                            <h3 class="font-bold text-lg mb-4">خلاصه وضعیت</h3>
+                                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                                <div class="bg-blue-100 p-3 rounded-lg">
+                                                    <div class="text-sm text-gray-600">پروژه‌های فعال</div>
+                                                    <div class="text-2xl font-bold">۱۲</div>
+                                                </div>
+                                                <div class="bg-green-100 p-3 rounded-lg">
+                                                    <div class="text-sm text-gray-600">اعضای تیم</div>
+                                                    <div class="text-2xl font-bold">۸</div>
+                                                </div>
+                                                <div class="bg-purple-100 p-3 rounded-lg">
+                                                    <div class="text-sm text-gray-600">وظایف امروز</div>
+                                                    <div class="text-2xl font-bold">۵</div>
+                                                </div>
+                                            </div>
+                                            <div class="bg-white p-4 rounded-lg shadow">
+                                                <h4 class="font-bold mb-2">پیشرفت پروژه‌ها</h4>
+                                                <div class="space-y-3">
+                                                    <div>
+                                                        <div class="flex justify-between mb-1">
+                                                            <span>طراحی وب‌سایت</span>
+                                                            <span>۷۵٪</span>
+                                                        </div>
+                                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                                            <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex justify-between mb-1">
+                                                            <span>توسعه اپلیکیشن</span>
+                                                            <span>۴۵٪</span>
+                                                        </div>
+                                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                                            <div class="bg-secondary h-2 rounded-full" style="width: 45%"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex justify-between mb-1">
+                                                            <span>بازاریابی</span>
+                                                            <span>۹۰٪</span>
+                                                        </div>
+                                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                                            <div class="bg-accent h-2 rounded-full" style="width: 90%"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <button class="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white shadow-lg transform transition-transform hover:scale-110">
+                        <i class="fas fa-play text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <a href="#pricing" class="btn-primary">
+                    <i class="fas fa-check ml-2"></i>
+                    شروع استفاده از همفراز
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">نظرات مشتریان ما</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    ببینید مشتریان ما درباره همفراز چه می‌گویند
+                </p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card p-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-quote">
+                            <p class="text-gray-600 mb-6">
+                                همفراز به ما کمک کرد تا فرآیندهای کاری خود را بهینه کنیم و بهره‌وری تیم را به میزان قابل توجهی افزایش دهیم. واقعاً از این ابزار راضی هستیم.
+                            </p>
+                            <div class="flex items-center">
+                                <div class="testimonial-avatar bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-500 text-2xl"></i>
+                                </div>
+                                <div class="mr-4">
+                                    <h4 class="font-bold">علی محمدی</h4>
+                                    <p class="text-sm text-gray-500">مدیر عامل، تک‌نوین</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-quote">
+                            <p class="text-gray-600 mb-6">
+                                رابط کاربری زیبا و کاربردی همفراز باعث شده تا تیم ما با اشتیاق بیشتری از آن استفاده کند. مدیریت پروژه‌ها بسیار ساده‌تر شده است.
+                            </p>
+                            <div class="flex items-center">
+                                <div class="testimonial-avatar bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-500 text-2xl"></i>
+                                </div>
+                                <div class="mr-4">
+                                    <h4 class="font-bold">سارا احمدی</h4>
+                                    <p class="text-sm text-gray-500">مدیر پروژه، دیجی‌پلاس</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="testimonial-quote">
+                            <p class="text-gray-600 mb-6">
+                                گزارش‌های تحلیلی همفراز به ما کمک می‌کند تا تصمیمات بهتری برای کسب و کارمان بگیریم. پشتیبانی عالی و به‌روزرسانی‌های منظم از نقاط قوت آن است.
+                            </p>
+                            <div class="flex items-center">
+                                <div class="testimonial-avatar bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-500 text-2xl"></i>
+                                </div>
+                                <div class="mr-4">
+                                    <h4 class="font-bold">امیر حسینی</h4>
+                                    <p class="text-sm text-gray-500">مدیر فنی، وب‌افزار</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 flex justify-center" data-aos="fade-up">
+                <div class="flex space-x-2 space-x-reverse">
+                    <button class="w-3 h-3 rounded-full bg-primary"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300"></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute top-0 right-0 w-40 h-40 bg-primary rounded-full opacity-10 translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-60 h-60 bg-secondary rounded-full opacity-10 -translate-x-1/2 translate-y-1/2"></div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">تعرفه‌های همفراز</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    بسته‌های متنوع متناسب با نیازهای کسب و کار شما
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="pricing-card card p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold mb-2">پایه</h3>
+                        <div class="text-3xl font-bold mb-2">
+                            <span>۱۹۹,۰۰۰</span>
+                            <span class="text-sm text-gray-500">تومان / ماهانه</span>
+                        </div>
+                        <p class="text-gray-600">مناسب برای تیم‌های کوچک</p>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>تا ۵ کاربر</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>۱۰ پروژه همزمان</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>گزارش‌های پایه</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>پشتیبانی ایمیلی</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times ml-2"></i>
+                            <span>ابزارهای پیشرفته</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times ml-2"></i>
+                            <span>API اختصاصی</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="text-center">
+                        <a href="#contact" class="btn-primary w-full">انتخاب پلن</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card card p-6 featured" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute top-0 left-0 right-0 bg-primary text-white text-center py-1 text-sm">
+                        پیشنهاد ویژه
+                    </div>
+                    <div class="text-center mb-6 pt-4">
+                        <h3 class="text-xl font-bold mb-2">حرفه‌ای</h3>
+                        <div class="text-3xl font-bold mb-2">
+                            <span>۳۹۹,۰۰۰</span>
+                            <span class="text-sm text-gray-500">تومان / ماهانه</span>
+                        </div>
+                        <p class="text-gray-600">مناسب برای تیم‌های متوسط</p>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>تا ۲۰ کاربر</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>پروژه‌های نامحدود</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>گزارش‌های پیشرفته</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>پشتیبانی تلفنی</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>ابزارهای پیشرفته</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-times ml-2"></i>
+                            <span>API اختصاصی</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="text-center">
+                        <a href="#contact" class="btn-primary w-full">انتخاب پلن</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card card p-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold mb-2">سازمانی</h3>
+                        <div class="text-3xl font-bold mb-2">
+                            <span>۸۹۹,۰۰۰</span>
+                            <span class="text-sm text-gray-500">تومان / ماهانه</span>
+                        </div>
+                        <p class="text-gray-600">مناسب برای سازمان‌های بزرگ</p>
+                    </div>
+                    
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>کاربران نامحدود</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>پروژه‌های نامحدود</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>گزارش‌های سفارشی</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>پشتیبانی ۲۴/۷</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>ابزارهای پیشرفته</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 ml-2"></i>
+                            <span>API اختصاصی</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="text-center">
+                        <a href="#contact" class="btn-primary w-full">انتخاب پلن</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <p class="text-gray-600 mb-4">نیاز به راهکار سفارشی دارید؟</p>
+                <a href="#contact" class="btn-secondary">
+                    <i class="fas fa-envelope ml-2"></i>
+                    با ما تماس بگیرید
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute top-1/2 left-0 w-40 h-40 bg-primary rounded-full opacity-10 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-60 h-60 bg-secondary rounded-full opacity-10 translate-x-1/2 translate-y-1/2"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">درباره همفراز</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    داستان ما و چشم‌انداز آینده
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap items-center">
+                <div class="w-full lg:w-1/2 mb-8 lg:mb-0" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold mb-4">ماموریت ما</h3>
+                    <p class="text-gray-600 mb-6">
+                        همفراز با هدف ارتقای بهره‌وری تیم‌ها و کسب و کارها در سال ۱۴۰۰ تاسیس شد. ما معتقدیم که با ابزارهای مناسب، هر تیمی می‌تواند به اوج توانایی خود برسد.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        تیم ما متشکل از متخصصان باتجربه در زمینه‌های مختلف فناوری اطلاعات، طراحی تجربه کاربری و مدیریت پروژه است که با شور و اشتیاق برای ارائه بهترین راهکارها تلاش می‌کنند.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-primary mr-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">+۵۰</h4>
+                                <p class="text-sm text-gray-500">متخصص</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-secondary mr-3">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">+۲۰۰</h4>
+                                <p class="text-sm text-gray-500">مشتری سازمانی</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-accent mr-3">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">+۵۰۰۰</h4>
+                                <p class="text-sm text-gray-500">پروژه موفق</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mr-3">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">+۱۰</h4>
+                                <p class="text-sm text-gray-500">کشور</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2" data-aos="fade-left">
+                    <div class="relative">
+                        <div class="bg-white p-8 rounded-xl shadow-xl relative z-10">
+                            <h3 class="text-2xl font-bold mb-6">ارزش‌های ما</h3>
+                            <div class="space-y-4">
+                                <div class="flex">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0 ml-4">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">کیفیت</h4>
+                                        <p class="text-gray-600">ما به ارائه محصولات با کیفیت و بدون نقص متعهد هستیم.</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center flex-shrink-0 ml-4">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">نوآوری</h4>
+                                        <p class="text-gray-600">همواره به دنبال راه‌های جدید برای بهبود محصولات و خدمات خود هستیم.</p>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center flex-shrink-0 ml-4">
+                                        <i class="fas fa-handshake"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">مشتری‌مداری</h4>
+                                        <p class="text-gray-600">رضایت مشتری در اولویت اول ما قرار دارد.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 w-full h-full bg-primary opacity-10 rounded-xl -z-10"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16" data-aos="fade-up">
+                <h3 class="text-2xl font-bold mb-8 text-center">تیم ما</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-gray-500 text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold">محمد رضایی</h4>
+                        <p class="text-sm text-gray-500">مدیرعامل</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-gray-500 text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold">نیلوفر کریمی</h4>
+                        <p class="text-sm text-gray-500">مدیر محصول</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-gray-500 text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold">امیر حسینی</h4>
+                        <p class="text-sm text-gray-500">مدیر فنی</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-gray-500 text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold">سارا محمدی</h4>
+                        <p class="text-sm text-gray-500">مدیر بازاریابی</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">تماس با ما</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    ما آماده پاسخگویی به سوالات شما هستیم
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full lg:w-1/2 px-4 mb-8 lg:mb-0" data-aos="fade-right">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6">اطلاعات تماس</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="contact-info-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">آدرس</h4>
+                                    <p class="text-gray-600">تهران، خیابان ولیعصر، برج نوآوری، طبقه ۵</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">تلفن</h4>
+                                    <p class="text-gray-600">۰۲۱-۸۸۷۷۶۶۵۵</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">ایمیل</h4>
+                                    <p class="text-gray-600">info@hamfaraz.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">ساعات کاری</h4>
+                                    <p class="text-gray-600">شنبه تا چهارشنبه: ۹ صبح تا ۶ عصر</p>
+                                    <p class="text-gray-600">پنجشنبه: ۹ صبح تا ۱ بعدازظهر</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold mb-4">ما را در شبکه‌های اجتماعی دنبال کنید</h4>
+                            <div class="flex space-x-4 space-x-reverse">
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-400 text-white flex items-center justify-center hover:bg-blue-500 transition-colors">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-pink-600 text-white flex items-center justify-center hover:bg-pink-700 transition-colors">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-800 text-white flex items-center justify-center hover:bg-blue-900 transition-colors">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2 px-4" data-aos="fade-left">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6">ارسال پیام</h3>
+                        <form id="contact-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="name" class="block mb-2 font-medium">نام</label>
+                                    <input type="text" id="name" class="form-input" placeholder="نام خود را وارد کنید">
+                                </div>
+                                <div>
+                                    <label for="email" class="block mb-2 font-medium">ایمیل</label>
+                                    <input type="email" id="email" class="form-input" placeholder="ایمیل خود را وارد کنید">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="subject" class="block mb-2 font-medium">موضوع</label>
+                                <input type="text" id="subject" class="form-input" placeholder="موضوع پیام">
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-2 font-medium">پیام</label>
+                                <textarea id="message" rows="5" class="form-input" placeholder="پیام خود را بنویسید"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn-primary w-full">
+                                    <i class="fas fa-paper-plane ml-2"></i>
+                                    ارسال پیام
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section id="login" class="section bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">ورود به سامانه</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    وارد حساب کاربری خود شوید و از امکانات همفراز استفاده کنید
+                </p>
+            </div>
+            
+            <div class="max-w-md mx-auto" data-aos="fade-up">
+                <div class="login-form">
+                    <div class="text-center mb-8">
+                        <div class="text-3xl font-bold text-primary gradient-text inline-block">
+                            <span class="text-primary">هم</span><span class="text-accent">فراز</span>
+                        </div>
+                    </div>
+                    
+                    <form id="login-form" class="space-y-4">
+                        <div>
+                            <label for="login-email" class="block mb-2 font-medium">ایمیل</label>
+                            <input type="email" id="login-email" class="form-input" placeholder="ایمیل خود را وارد کنید">
+                        </div>
+                        <div>
+                            <label for="login-password" class="block mb-2 font-medium">رمز عبور</label>
+                            <input type="password" id="login-password" class="form-input" placeholder="رمز عبور خود را وارد کنید">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="remember" class="ml-2">
+                                <label for="remember">مرا به خاطر بسپار</label>
+                            </div>
+                            <a href="#" class="text-primary hover:underline">فراموشی رمز عبور</a>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-primary w-full">
+                                <i class="fas fa-sign-in-alt ml-2"></i>
+                                ورود
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p>حساب کاربری ندارید؟ <a href="#" class="text-primary hover:underline">ثبت نام کنید</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold mb-6">
+                        <span class="text-primary">هم</span><span class="text-accent">فراز</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        ابزار هوشمند تیم‌سازی و کسب و کار برای موفقیت شما
+                    </p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">لینک‌های سریع</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">خانه</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors">ویژگی‌ها</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors">تعرفه‌ها</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">درباره ما</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">تماس با ما</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">خدمات</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">مدیریت پروژه</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">مدیریت تیم</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">گزارش‌های تحلیلی</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">ارتباطات تیمی</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">API اختصاصی</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">خبرنامه</h4>
+                    <p class="text-gray-400 mb-4">
+                        برای دریافت آخرین اخبار و بروزرسانی‌ها در خبرنامه ما عضو شوید
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="ایمیل خود را وارد کنید" class="form-input rounded-l-none">
+                        <button type="submit" class="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-primary-dark transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-wrap justify-between items-center">
+                <p class="text-gray-400">
+                    &copy; ۱۴۰۲ همفراز. تمامی حقوق محفوظ است.
+                </p>
+                <div class="flex space-x-4 space-x-reverse mt-4 sm:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">حریم خصوصی</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">شرایط استفاده</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">سوالات متداول</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+        
+        // Initialize GSAP
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Sticky Header
+        const stickyHeader = document.querySelector('.sticky-header');
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                if (scrollTop > lastScrollTop) {
+                    // Scrolling down
+                    stickyHeader.classList.remove('visible');
+                } else {
+                    // Scrolling up
+                    stickyHeader.classList.add('visible');
+                }
+            } else {
+                stickyHeader.classList.remove('visible');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+        
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+        
+        // Mobile Menu Toggle
+        document.querySelectorAll('.mobile-menu-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.nav-links').forEach(menu => {
+                    menu.classList.toggle('active');
+                });
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.');
+            this.reset();
+        });
+        
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('در حال ورود به سامانه...');
+        });
+        
+        // Animations
+        gsap.from('.hero-shape', {
+            x: 100,
+            opacity: 0,
+            duration: 1.5,
+            ease: 'power3.out'
+        });
+        
+        // Testimonial Slider (simplified version)
+        const testimonialDots = document.querySelectorAll('#testimonials .flex.space-x-2 button');
+        testimonialDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                testimonialDots.forEach(d => d.classList.remove('bg-primary'));
+                testimonialDots.forEach(d => d.classList.add('bg-gray-300'));
+                dot.classList.remove('bg-gray-300');
+                dot.classList.add('bg-primary');
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'95ff36b497f52d5c',t:'MTc1MjY0NDkzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

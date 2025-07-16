@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login - Hamfaraz </title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com  "></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Iranian Font: Vazir -->
+    <link href="  https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #2E86C1;
+            --green: #2ECC71;
+            --orange: #F39C12;
+            --red: #E74C3C;
+            --yellow: #F1C40F;
+            --bg-color: #F5F5F5;
+            --warm-energy: #FFA726;
+            --cool-energy: #64B5F6;
+            --forest-light: #A9DFBF;
+        }
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            direction: rtl;
+            text-align: right;
+        }
+        .login-container {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+        }
+        .login-side {
+            background: linear-gradient(135deg, var(--cool-energy), var(--blue));
+            position: relative;
+            overflow: hidden;
+        }
+        .login-side::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 60%);
+            animation: rotate 30s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        .form-input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.2);
+        }
+        .login-btn {
+            background: linear-gradient(to right, var(--blue), var(--cool-energy));
+            transition: all 0.3s ease;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 134, 193, 0.3);
+        }
+        .social-btn {
+            transition: all 0.3s ease;
+        }
+        .social-btn:hover {
+            transform: translateY(-2px);
+        }
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            background-color: white;
+        }
+        .shape1 {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 20%;
+            animation: float 8s ease-in-out infinite;
+        }
+        .shape2 {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 10%;
+            animation: float 12s ease-in-out infinite;
+        }
+        .shape3 {
+            width: 70px;
+            height: 70px;
+            bottom: 30%;
+            left: 15%;
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(15px, 15px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        .error-message {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            display: none;
+        }
+        .error-message.show {
+            max-height: 60px;
+            display: block;
+        }
+        .input-icon {
+            color: #a0aec0;
+            transition: color 0.3s ease;
+        }
+        .form-input:focus + .input-icon {
+            color: var(--blue);
+        }
+        .toggle-password {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .toggle-password:hover {
+            color: var(--blue);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="login-container w-full max-w-5xl rounded-2xl overflow-hidden flex flex-col md:flex-row">
+        <!-- Left side - Login Form -->
+        <div class="w-full md:w-1/2 p-8 md:p-12 bg-white text-right">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">خوش آمدید</h1>
+                <p class="text-gray-600">لطفاً برای ادامه ثبت نام کنید</p>
+                {% if msg %}
+                <p style="color:red;">{{ msg }}</p>
+                {% endif %}
+            </div>
+            <div id="error-message" class="error-message bg-red-50 text-red-600 p-3 rounded-lg mb-4 border border-red-200">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span id="error-text">نام کاربری یا رمز عبور نادرست است. لطفاً دوباره تلاش کنید.</span>
+                </div>
+            </div>
+            <form id="login-form" method="post" action="/register" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="username" class="block text-sm font-medium text-gray-700">نام کاربری</label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username"
+                            class="form-input w-full py-3 px-4 pr-10 rounded-lg text-right" 
+                            placeholder="نام کاربری خود را وارد کنید"
+                            required
+                        >
+                        <i class="fas fa-user absolute right-3 top-1/2 transform -translate-y-1/2 input-icon"></i>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <label for="password" class="block text-sm font-medium text-gray-700">رمز عبور</label>
+                        <a href="#" class="text-sm text-blue-600 hover:text-blue-800 hover:underline">رمز عبور خود را فراموش کرده‌اید؟</a>
+                    </div>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            class="form-input w-full py-3 px-4 pr-10 rounded-lg text-right" 
+                            placeholder="رمز عبور خود را وارد کنید"
+                            required
+                        >
+                        <i class="fas fa-lock absolute right-3 top-1/2 transform -translate-y-1/2 input-icon"></i>
+                        <i class="fas fa-eye toggle-password absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500" id="toggle-password"></i>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <label for="confirm-password" class="block text-sm font-medium text-gray-700">تکرار رمز عبور</label>
+                    </div>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="confirm-password" 
+                            name="confirm-password"
+                            class="form-input w-full py-3 px-4 pr-10 rounded-lg text-right" 
+                            placeholder="رمز عبور خود را مجدداً وارد کنید"
+                            required
+                        >
+                        <i class="fas fa-check absolute right-3 top-1/2 transform -translate-y-1/2 input-icon"></i>
+                        <i class="fas fa-eye toggle-password absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500" id="toggle-confirm-password"></i>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">من را به خاطر بسپار</label>
+                </div>
+                <button 
+                    type="submit" 
+                    class="login-btn w-full py-3 px-4 rounded-lg text-white font-medium focus:outline-none"
+                >
+                    ثبت نام
+                </button>
+            </form>
+            <div class="mt-8">
+                <div class="relative flex items-center justify-center">
+                    <div class="border-t border-gray-300 absolute w-full"></div>
+                    <div class="bg-white px-4 relative text-sm text-gray-500">یا ادامه دهید با</div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mt-4">
+                    <button class="social-btn flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        <i class="fab fa-google text-red-500"></i>
+                    </button>
+                    <button class="social-btn flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        <i class="fab fa-facebook-f text-blue-600"></i>
+                    </button>
+                    <button class="social-btn flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        <i class="fab fa-apple text-gray-800"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-gray-600">
+                    حساب کاربری دارید؟ 
+                    <a href="/login" class="text-blue-600 font-medium hover:underline">ورود</a>
+                </p>
+                <p class="text-gray-600 mt-2">
+                    <a href="/" class="text-blue-600 font-medium hover:underline">صفحه اصلی</a>
+                </p>
+            </div>
+        </div>
+        <!-- Right side - Decorative -->
+        <div class="login-side w-full md:w-1/2 p-8 md:p-12 hidden md:flex flex-col justify-center items-center text-white relative">
+            <div class="floating-shape shape1"></div>
+            <div class="floating-shape shape2"></div>
+            <div class="floating-shape shape3"></div>
+            <div class="relative z-10 text-center">
+                <div class="mb-6 inline-block p-4 rounded-full bg-white/10 backdrop-blur-sm">
+                    <i class="fas fa-user-shield text-5xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">ثبت نام امن</h2>
+                <p class="text-lg opacity-90 mb-6">داده‌های شما با استانداردهای رمزنگاری صنعتی محافظت می‌شوند</p>
+                <div class="flex justify-center space-x-2">
+                    <span class="h-2 w-2 rounded-full bg-white opacity-60"></span>
+                    <span class="h-2 w-6 rounded-full bg-white"></span>
+                    <span class="h-2 w-2 rounded-full bg-white opacity-60"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    togglePassword.classList.remove('fa-eye');
+                    togglePassword.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    togglePassword.classList.remove('fa-eye-slash');
+                    togglePassword.classList.add('fa-eye');
+                }
+            });
+
+            const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+            const confirmPasswordInput = document.getElementById('confirm-password');
+            // Toggle confirm password visibility
+            toggleConfirmPassword.addEventListener('click', function() {
+                if (confirmPasswordInput.type === 'password') {
+                    confirmPasswordInput.type = 'text';
+                    toggleConfirmPassword.classList.remove('fa-eye');
+                    toggleConfirmPassword.classList.add('fa-eye-slash');
+                } else {
+                    confirmPasswordInput.type = 'password';
+                    toggleConfirmPassword.classList.remove('fa-eye-slash');
+                    toggleConfirmPassword.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
